@@ -1,3 +1,5 @@
+import scala.annotation.tailrec
+
 /**
   * Created by yshkurnykov on 31.07.2017.
   */
@@ -112,6 +114,20 @@ class ExtendedIntArray(a:Array[Int]) {
   }
 
   /**
+    * List reverse with tail rec
+    * @param l
+    * @return
+    */
+  def reverseListTailRec(l: List[Int]): List[Int] = {
+    @tailrec
+    def _reverse(res: List[Int], rem: List[Int]): List[Int] = rem match {
+      case Nil => res
+      case h :: tail => _reverse(h :: res, tail)
+    }
+    _reverse(Nil, l)
+  }
+
+  /**
     * Array reverse (technical method)
     * @return
     */
@@ -120,6 +136,13 @@ class ExtendedIntArray(a:Array[Int]) {
   }
 
   /**
+    * Array reverse (technical method) with tailrec
+    * @return
+    */
+  def reverseWithTail = {
+    reverseListTailRec(a.toList).toArray
+  }
+  /**
     * Array describe method
     */
   def describe ={
@@ -127,6 +150,8 @@ class ExtendedIntArray(a:Array[Int]) {
     println(a.mkString(","))
     print("Array reversed:")
     println(reverse.mkString(","))
+    print("Array reversed 2:")
+    println(reverseWithTail.mkString(","))
     print("Max element:")
     println(maxEl)
     print("Min element:")
